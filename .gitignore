@@ -1,5 +1,6 @@
 # Compiled Object files
 *.o
+*.mod
 
 # Compiled Static libraries
 *.a
@@ -14,4 +15,5 @@
 __pycache__
 *.pyc
 *.dSYM
+bin/
 
