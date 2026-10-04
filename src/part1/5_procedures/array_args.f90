@@ -23,8 +23,8 @@ end subroutine print_element1
 
 ! pass the lower-bound variable
 subroutine print_element2(x, bottom)
-   real,intent(in) :: x(bottom:)
    integer,intent(in) :: bottom
+   real,intent(in) :: x(bottom:)
    print *,x(1)
  end subroutine print_element2
  
