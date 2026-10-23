@@ -1,0 +1,6 @@
+&config
+   matrix_a_file = "data/matrix_a.txt"
+   matrix_b_file = "data/matrix_b.txt"
+   output_file   = "output/report.txt"
+/
+

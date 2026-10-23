@@ -16,4 +16,5 @@ __pycache__
 *.pyc
 *.dSYM
 bin/
-
+output/
+build/
