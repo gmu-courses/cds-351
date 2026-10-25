@@ -1,57 +1,78 @@
 # Assignment 3 sample solution
+Student Name: C. Cruz
+Assignment Number: 3
 
-This solution refactors the Assignment 2 matrices and validation results into derived-type
-objects. Run commands from this `assignment3` directory.
 
-## Build and run
+#### Method
 
-```bash
-make
-make run
-make clean
+I copied the source and input files from assignment3 and recompiled manually.
+Results are identical - as expected.
 
-make debug
-make run
-
-make release
-make run
-```
-
-The test matrices produce
+Again, the input matrices are
 
 ```text
-C = [58 64; 139 154]
+A = [1 1 1; 2 2 2]
+B = [1 1; 2 2; 1 1]
 ```
 
-with a checksum of 415. The relative error should be zero or close to machine rounding, and
-the report should mark the calculation as verified.
+Their independently calculated product is
 
-## Incremental-build observations
+```text
+C = [4 4; 8 8]
 
-1. Immediately after a successful build, `make` runs no compile or link recipes because
-   every compiled target exists and is newer than its prerequisites. The inexpensive
-   `mkdir -p` recipe may still run because `dirs` is a phony target.
-2. After `touch src/matrix_mod.f90`, Make recompiles `matrix_mod.o` and `main.o`, then relinks
-   the executable. The `main.o` rule records its dependency on `matrix_mod.o`.
-3. After `touch src/matrix_types_mod.f90`, Make recompiles `matrix_types_mod.o`, both modules
-   that use it, and `main.o`, then relinks. A change near the base of the dependency graph
-   affects more downstream targets.
+and
 
-These explicit object dependencies are conservative: an implementation-only source change
-may rebuild a user even if the generated module interface did not actually change. That is
-acceptable for this small instructional Makefile.
+sum(C) = 24
+```
 
-## Allocatable-component assignment
+Note I chose simple matrices so that I can easily verify the result by hand.
 
-For `copy = original`, intrinsic derived-type assignment copies the scalar components and
-allocates `copy%values` as needed before copying the array elements. The two allocatable
-components are independent afterward. This ownership behavior is convenient and safe, but
-copying a large matrix requires additional memory and moves every element. At HPC scales,
-that hidden-looking data movement can take significant time and consume substantial memory.
 
-## Limitations
+#### Discussion
 
-The text-file reader is deliberately simple, the matrix names are derived from filenames,
-and the Makefile uses a clean rebuild when switching build modes. A larger application would
-usually use a binary scientific format, richer validation, and separate build directories
-for debug and release objects.
+As in assignment#2, the manual and intrinsic results do agree exactly or to
+within ordinary floating-point rounding and so the test showed that the
+validation was successful with zero relative error.
+
+Why we shouldn't copy entire data structures such as shown here:
+
+```
+type(matrix_data) :: original , copy
+
+copy = original
+```
+
+Since copy and original both contains an allocatable values array thi is,
+for large matrices, a significant memory use and data movement.
+Why, the most obvious issue for us is that every element inside the original
+array is sequentially copied over to the copy memory block - very costly!
+Another more subtle issue - not apparent - is that if the destination array
+is not allocated then, what will Fortran do? Well, it may allocate/reallocate
+it to match the source.
+
+
+Why can changing the the types module require more recompilation than
+changing an independent source file? Because the compiler enforces strict
+consistency between the definition of the type and where it is used, that is,
+there is a "cascading" effect.
+
+
+#### 
+
+Copied the Makefile from cds-351  and modify to add new targets
+
+Then it is easy to build and run
+
+```
+make clean (removes files from previous run)
+make (compiles all the project files without running)
+make run (compiles and runs files)
+
+```
+
+
+### Known limitations.
+
+Same as assignment2:
+- testing with very simple matrices
+- the input files are also text, which are not representative of realistic data
