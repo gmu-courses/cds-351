@@ -7,7 +7,8 @@
 #   make          build every program
 #   make info     record the machine description in results/machine.txt
 #   make run      build, record the machine, and run every experiment
-#   make plot     plot the CSV files in results/
+#   make plot     plot the CSV files in results/ (PNG with matplotlib,
+#                 otherwise SVG with plot_results_svg.py)
 #   make clean    remove generated files (keeps results/)
 
 FC     = gfortran
@@ -66,7 +67,12 @@ run: all info
 	@echo "results are in results/"
 
 plot:
-	python3 plot_results.py
+	@if python3 -c "import matplotlib" 2>/dev/null; then \
+	    python3 plot_results.py; \
+	else \
+	    echo "matplotlib not found: writing SVG files instead (open them in a browser)"; \
+	    python3 plot_results_svg.py; \
+	fi
 
 clean:
-	rm -rf build bin *.png
+	rm -rf build bin *.png *.svg

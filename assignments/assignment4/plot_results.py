@@ -106,11 +106,11 @@ def plot_ilp():
                     "o-", color=color, linewidth=2, markersize=6, label=label)
         ax.set_xscale("log", base=2)
         ax.set_xticks([1, 2, 4, 8], ["1", "2", "4", "8"])
-        ax.set_ylim(bottom=0)
         ax.set_title(f"array in {case}")
         ax.set_xlabel("accumulators")
         ax.grid(True, color="#dddddd", linewidth=0.8)
         ax.set_axisbelow(True)
+    axes[0].set_ylim(bottom=0)           # after both panels, so no point is cut off
     axes[0].set_ylabel("time per addition (ns)")
     axes[0].legend(frameon=False)
     fig.suptitle("Breaking the dependency chain")
