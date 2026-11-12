@@ -24,9 +24,8 @@ program pi_serial
 
     run_time = omp_get_wtime() - start_time
 
-    print '(a,f18.15,a,f10.6,a)', &
-        "Pi: ", pi, &
-        "  Time: ", run_time, " seconds"
+    print '(a,f18.15)', "  Total Pi: ", pi
+    print '(a,f10.6,a)', "  Time: ", run_time, " seconds"
 
 end program pi_serial
 
