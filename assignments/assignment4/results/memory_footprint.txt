@@ -1,0 +1,13 @@
+Array size:    381.5 MiB
+  PID   RSS(KiB)   VSZ(KiB)  COMMAND
+1. program started
+61628   1728 410604800 ./bin/memory_footprint.x
+2. after allocate
+61628   1744 410995456 ./bin/memory_footprint.x
+3. after writing the first half
+61628 197104 410995456 ./bin/memory_footprint.x
+4. after writing the whole array
+61628 392448 410995456 ./bin/memory_footprint.x
+Checksum:   5.0000E+07
+5. after deallocate
+61628   1888 410613008 ./bin/memory_footprint.x

@@ -1,0 +1,10 @@
+# compiler options: -fPIC -mmacosx-version-min=14.0.0 -mcpu=apple-m1 -mlittle-endian -mabi=lp64 -O2 -std=f2018
+case,accumulators,seconds,ns_per_add,sum
+cache,1,.2073,.772,  1.373461912052300E+08
+cache,2,.0929,.346,  1.373461911908810E+08
+cache,4,.0456,.170,  1.373461912006919E+08
+cache,8,.0228,.085,  1.373461911959436E+08
+memory,1,.1721,.641,  1.342078274178613E+08
+memory,2,.0933,.348,  1.342078274175361E+08
+memory,4,.0461,.172,  1.342078274175556E+08
+memory,8,.0258,.096,  1.342078274175534E+08
