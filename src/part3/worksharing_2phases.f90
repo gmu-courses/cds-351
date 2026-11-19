@@ -22,14 +22,15 @@ program worksharing_2phases
     do i = 1, n
         a(i) = f(i)
     end do
-    !$omp end do     ! implicit barrier: all threads wait here
+    !$omp end do    ! implicit barrier: all threads wait here
     !$omp do
     do i = 1, n
         b(i) = a(n + 1 - i)
     end do
     !$omp end do
     !$omp end parallel
-    print '(a, i0, a, i0)', 'with barrier:    wrong values of b: ', count_wrong(b), ' of ', n
+    print '(a, i0, a, i0)', 'wrong values of b: ', &
+        count_wrong(b), ' of ', n
 
 contains
 
