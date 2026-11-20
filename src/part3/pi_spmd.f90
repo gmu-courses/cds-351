@@ -3,7 +3,7 @@ program pi_spmd
     use omp_lib
     implicit none
 
-    integer, parameter :: max_threads = 4
+    integer, parameter :: max_threads = 16
     integer, parameter :: num_steps = 1000000000
 
     integer :: i, id, numthreads
